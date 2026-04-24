@@ -10,20 +10,29 @@ body { font-family: -apple-system, sans-serif; text-align: center; padding: 40px
 h1 { font-size: 24px; margin-bottom: 8px; }
 p { color: #666; font-size: 16px; }
 .btn { display: inline-block; margin-top: 20px; padding: 12px 24px; background: #007AFF; color: white; border-radius: 12px; text-decoration: none; font-weight: 600; }
+.btn-open { background: #34C759; margin-right: 8px; }
 </style>
-<script>
-var appStoreURL = "https://apps.apple.com/app/id6762463339";
-// 3秒後に自動リダイレクト
-setTimeout(function() { window.location.href = appStoreURL; }, 3000);
-</script>
 </head>
 <body>
 <div class="card">
 <h1>TripPlanner</h1>
 <p>旅行プランが共有されました</p>
-<p>アプリをインストールしてリンクを開いてください</p>
-<p style="color:#999;font-size:13px;">3秒後にApp Storeへ移動します...</p>
-<a class="btn" href="https://apps.apple.com/app/id6762463339">App Storeで開く</a>
+<a class="btn btn-open" id="openApp" href="#">アプリに予定をインポート</a>
+<p style="color:#999;font-size:13px;">アプリが未インストールの場合はApp Storeからダウンロードしてください</p>
+<a class="btn" href="https://apps.apple.com/app/id6762463339">アプリをダウンロード</a>
 </div>
+<script>
+var appStoreURL = "https://apps.apple.com/app/id6762463339";
+var dataParam = new URLSearchParams(window.location.search).get("data");
+var customSchemeURL = dataParam ? "tripplanner://import?data=" + encodeURIComponent(dataParam) : null;
+
+if (customSchemeURL) {
+  document.getElementById("openApp").href = customSchemeURL;
+  // ページ表示後に自動でアプリを開く
+  setTimeout(function() { window.location.href = customSchemeURL; }, 500);
+} else {
+  document.getElementById("openApp").style.display = "none";
+}
+</script>
 </body>
 </html>
