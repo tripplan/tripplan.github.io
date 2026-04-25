@@ -17,14 +17,15 @@ p { color: #666; font-size: 16px; }
 <div class="card">
 <h1>TripPlanner</h1>
 <p>旅行プランが共有されました</p>
-<p>アプリがインストール済みなら「アプリで開く」をタップしてください</p>
+<a class="btn btn-open" id="openApp" href="#">アプリに予定をインポート</a>
 <p style="color:#999;font-size:13px;">アプリが未インストールの場合はApp Storeからダウンロードしてください</p>
-<a class="btn btn-open" id="openApp" href="#">アプリで開く</a>
-<a class="btn" href="https://apps.apple.com/app/id6762463339">App Storeで開く</a>
+<a class="btn" href="https://apps.apple.com/app/id6762463339">アプリをダウンロード</a>
 </div>
 <script>
 var appStoreURL = "https://apps.apple.com/app/id6762463339";
 var dataParam = new URLSearchParams(window.location.search).get("data");
+// URLSearchParamsは+を空白に変換するため、元に戻す
+if (dataParam) dataParam = dataParam.replace(/ /g, "+");
 var customSchemeURL = dataParam ? "tripplanner://import?data=" + dataParam : null;
 
 if (customSchemeURL) {
